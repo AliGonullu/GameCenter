@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="main-menu">
+        <h1>Game Center</h1>
+        <div class="games-grid">
+            <div class="game-card" data-game="tictactoe">
+                <div class="game-card-content">
+                    <div class="game-icon">
+                        <span class="tic-tac-toe-icon">
+                            <span>×</span>
+                            <span>○</span>
+                        </span>
+                    </div>
+                    <h2 class="game-title">Tic Tac Toe</h2>
+                    <p class="game-description">Classic game of X's and O's with adjustable board size and AI
+                        difficulty.</p>
+                    <button class="play-button">Play Now</button>
+                </div>
+            </div>
+            <div class="game-card" data-game="snake">
+                <div class="game-card-content">
+                    <div class="game-icon">
+                        <span class="snake-icon">
+                            <span class="snake-body">🟩</span>
+                            <span class="snake-apple">🍎</span>
+                        </span>
+                    </div>
+                    <h2 class="game-title">Snake</h2>
+                    <p class="game-description">Classic Snake game. Eat apples to grow longer, but don't hit the walls
+                        or yourself!</p>
+                    <button class="play-button">Play Now</button>
+                </div>
+            </div>
+            <div class="game-card coming-soon">
+                <div class="game-card-content">
+                    <div class="game-icon">
+                        <span class="coming-soon-icon">+</span>
+                    </div>
+                    <h2 class="game-title">Coming Soon</h2>
+                    <p class="game-description">More exciting games are on the way!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wrap existing game content in a new div -->
+    <div id="tictactoe-game" class="game-container hidden">
+        <div class="container">
+            <!-- Add opening screen -->
+            <div id="opening-screen" class="opening-screen">
+                <button id="menu-back-button" class="back-button" title="Back to Menu">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <h1>Tic Tac Toe</h1>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label>Board Size</label>
+                        <div class="size-selector">
+                            <button class="size-btn" data-size="3">3×3</button>
+                            <button class="size-btn" data-size="4">4×4</button>
+                            <button class="size-btn" data-size="5">5×5</button>
+                            <button class="size-btn" data-size="6">6×6</button>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>Difficulty</label>
+                        <div class="difficulty-selector">
+                            <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+                            <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                            <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                        </div>
+                    </div>
+                    <button id="start-game" class="start-btn">Start Game</button>
+                </div>
+            </div>
+
+            <!-- Existing game screen, wrap in a new div -->
+            <div id="game-screen" class="game-screen hidden">
+                <button id="back-button" class="back-button" title="Back to Menu">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="score-board">
+                    <div class="score-item">
+                        <span class="score-label">You</span>
+                        <span id="player-score" class="score-value">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Computer</span>
+                        <span id="computer-score" class="score-value">0</span>
+                    </div>
+                    <button id="reset-scores" class="reset-scores-btn" title="Reset Scores">
+                        <i class="fas fa-rotate"></i>
+                    </button>
+                </div>
+                <div id="board" class="board">
+                    <div class="cell" data-index="0"></div>
+                    <div class="cell" data-index="1"></div>
+                    <div class="cell" data-index="2"></div>
+                    <div class="cell" data-index="3"></div>
+                    <div class="cell" data-index="4"></div>
+                    <div class="cell" data-index="5"></div>
+                    <div class="cell" data-index="6"></div>
+                    <div class="cell" data-index="7"></div>
+                    <div class="cell" data-index="8"></div>
+                </div>
+                <div class="button-container">
+                    <button id="restart" class="restart-btn">
+                        <i class="fas fa-rotate"></i> Restart Game
+                    </button>
+                </div>
+                <div id="result-screen" class="result-screen">
+                    <div id="result-message" class="result-message"></div>
+                    <button id="play-again">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Snake game container -->
+    <div id="snake-game" class="game-container hidden">
+        <div class="container">
+            <button id="snake-back-button" class="back-button" title="Back to Menu">
+                <span class="back-icon">←</span>
+            </button>
+            <h1>Snake</h1>
+            <div class="game-area">
+                <canvas id="snake-canvas"></canvas>
+                <div class="score-display">Score: <span id="snake-score">0</span></div>
+                <div class="high-score-display">High Score: <span id="snake-high-score">0</span></div>
+            </div>
+            <div id="snake-controls" class="controls-info">
+                <p>Use W A S D or Arrow Keys to move</p>
+                <p>Press Space to pause</p>
+                <div class="apple-types">
+                    <h3>Apple Types:</h3>
+                    <div class="apple-type"><span class="apple red"></span> Normal (+1)</div>
+                    <div class="apple-type"><span class="apple yellow"></span> Speed Up (+2)</div>
+                    <div class="apple-type"><span class="apple purple"></span> Slow Down (+2)</div>
+                    <div class="apple-type"><span class="apple green"></span> Grow +5 (+3)</div>
+                    <div class="apple-type"><span class="apple pink"></span> Rainbow (+2)</div>
+                </div>
+            </div>
+            <div id="snake-game-over" class="game-over hidden">
+                <h2>Game Over!</h2>
+                <p>Score: <span class="final-score">0</span></p>
+                <button id="snake-restart">Play Again</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
